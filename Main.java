@@ -3,7 +3,10 @@ import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("* * * SIMULATION BEGINS...");
+        System.out.println("* * * SIMULATION BEGINS...\n");
+        System.out.println("Deposit Agents                   Withdrawal Agents                   Balance                                              Transaction Number");
+        System.out.println("--------------                   -----------------                   -------                                              ------------------");
+
         boolean isMultiCore = Runtime.getRuntime().availableProcessors() > 1;
         BankAcc account = new BankAcc();
         
@@ -29,6 +32,9 @@ public class Main {
         executor.execute(WT7);
         executor.execute(WT8);
         executor.execute(WT9);
+        
+        executor.execute(new Auditor(account, "InternalBank",0));
+        
 
         Depositor DT0 = new Depositor(account,"DT0");
         Depositor DT1 = new Depositor(account,"DT1");
@@ -41,8 +47,8 @@ public class Main {
         executor.execute(DT3);
         executor.execute(DT4);
         // Assuming you define "InternalBank" and "TreasuryDept" as types for your auditors
-        executor.execute(new Auditor(account, "InternalBank"));
-        executor.execute(new Auditor(account, "TreasuryDepartment"));
+        
+        executor.execute(new Auditor(account, "TreasuryDepartment",0));
         
         // Similar initialization for WithdrawalAgents and AuditorAgents
         
