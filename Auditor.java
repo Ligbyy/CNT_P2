@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Auditor implements Runnable {
     private final BankAcc account;
-    private final String auditorType; // For distinguishing between different auditors, e.g., "InternalBank", "TreasuryDept"
+    private final String auditorType;
     private int lastTransactIndex;
 
     public Auditor(BankAcc account, String auditorType, int lastTransactIndex) {
@@ -16,16 +16,16 @@ public class Auditor implements Runnable {
 
         Random randInitial = new Random();
         try {
-            // Initial delay before the first audit
+           
             Thread.sleep(randInitial.nextInt(300));
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); // Handle interrupted exception
-            return; // Exit if the thread was interrupted during sleep
+            Thread.currentThread().interrupt(); 
+            return; 
         }
 
         Random rand = new Random();
         while (true) {
-            // Simulate auditing process
+           
             account.startAudit();
             double balance = account.getBalance();
             int transactionCount = account.getTransactionNumber();
@@ -42,7 +42,7 @@ public class Auditor implements Runnable {
             setLastTransactIndex(transactionCount);
             account.endAudit();
             try {
-                Thread.sleep(200 + rand.nextInt(500)); // Auditors run less frequently, hence longer sleep
+                Thread.sleep(200 + rand.nextInt(500)); 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

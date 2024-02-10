@@ -19,7 +19,6 @@ public class BankAcc {
     private final Condition auditorActive = lock.newCondition();
     private final AtomicBoolean isAuditorActive = new AtomicBoolean(false);
 
-    // Method to deposit money
     public void deposit(double amount, String name) {
         lock.lock();
         try {
@@ -28,7 +27,6 @@ public class BankAcc {
             }
             
             balance += amount;
-            // Formatting the message to align with the example provided
             String actionMsg = String.format("%-39s", "Agent " + name + " deposits $" + amount) + String.format("%-31s", " ") ;
             String balanceMsg = String.format("%-36s", "(+) Balance is $" + getBalance());
             String transactionMsg = String.format("%-6s", "                    " + transactionNumber.getAndIncrement());            
@@ -51,7 +49,7 @@ public class BankAcc {
     
     
 
-    // Method to withdraw money
+  
     public boolean withdraw(double amount, String name) {
         lock.lock();
         try {
@@ -86,16 +84,15 @@ public class BankAcc {
     }
 
     private void logFlaggedTransaction(String agentName, double amount, String transactionType, int transactionNumber) {
-    String filename = "C:\\Users\\blueg\\VSCodeprojects\\CNT_P2\\transaction.csv"; // Adjust the path as needed.
+    String filename = "C:\\Users\\blueg\\VSCodeprojects\\CNT_P2\\transaction.csv";
     try (FileWriter fw = new FileWriter(filename, true); PrintWriter pw = new PrintWriter(fw)) {
-        // Using ZonedDateTime to get current time with timezone
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss z");
-        String timestamp = ZonedDateTime.now().format(dtf); // Format the ZonedDateTime object
+        String timestamp = ZonedDateTime.now().format(dtf);
         String logEntry = String.format("%s, %s $%.2f at: %s, Transaction Number : %d%n", 
                                         agentName, transactionType, amount, timestamp, transactionNumber);
         pw.print(logEntry);
     } catch (IOException e) {
-        e.printStackTrace(); // Handle exception as needed.
+        e.printStackTrace();
     }
 }
 
@@ -112,13 +109,13 @@ public class BankAcc {
         lock.lock();
         try {
             isAuditorActive.set(false);
-            auditorActive.signalAll(); // Signal all waiting threads that audit is complete
+            auditorActive.signalAll(); 
         } finally {
             lock.unlock();
         }
     }
 
-    // Getters for balance and transaction number for the auditors
+   
     public double getBalance() {
         lock.lock();
         try {

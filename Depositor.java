@@ -13,10 +13,10 @@ public class Depositor implements Runnable {
     public void run() {
         Random rand = new Random();
         while (true) {
-            int amount = 1 + rand.nextInt(500); // Deposit amount between $1 and $500
+            int amount = 1 + rand.nextInt(500); 
             account.deposit(amount,getName());
             try {
-                Thread.sleep(rand.nextInt(200)); // Sleep for a random time
+                Thread.sleep(rand.nextInt(200)); 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

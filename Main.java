@@ -46,12 +46,9 @@ public class Main {
         executor.execute(DT2);
         executor.execute(DT3);
         executor.execute(DT4);
-        // Assuming you define "InternalBank" and "TreasuryDept" as types for your auditors
+
         
         executor.execute(new Auditor(account, "TreasuryDepartment",0));
-        
-        // Similar initialization for WithdrawalAgents and AuditorAgents
-        
-        // Remember to shut down the executor eventually (not shown here as simulation runs infinitely)
+     
     }
 }
